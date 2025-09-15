@@ -14,23 +14,22 @@ type Config struct {
 	Debug bool   `env:"DEBUG"`
 }
 
+// Метод инициализации конфигураций
 func MustLoad() *Config {
 
-	// Получение пути до файла конфигурации
-	configPath := os.Getenv("CONFIG_PATH")
-	if configPath == "" {
-		log.Fatal("CONFIG_PATN enviroment variable is not set")
-	}
+	// Путь до файла конфигурации
+	configPath := "./config/.env"
 
 	// Проверка на существования файла конфигурации
 	if _, err := os.Stat(configPath); err != nil {
 		log.Fatalf("error opening config file: %s", err)
 	}
 
+	// Конфигурация
 	var cfg Config
 
 	// Чтение файла конфигурации
-	err := cleanenv.ReadConfig(configPath, cfg)
+	err := cleanenv.ReadConfig(configPath, &cfg)
 	if err != nil {
 		log.Fatalf("error reading config file: %s", err)
 	}
