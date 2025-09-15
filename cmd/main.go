@@ -28,9 +28,11 @@ func main() {
 
 	logger.Info("Logger initialization is successfully")
 
+	// Запись логов из буфера, если программа завершится
 	defer logger.Sync()
 	router := gin.New()
 
+	// Формирования адреса, где будет поднято приложение
 	addr := fmt.Sprintf("%s:%d", cfg.Host, cfg.Port)
 
 	if err := http.ListenAndServe(addr, router); err != nil {
